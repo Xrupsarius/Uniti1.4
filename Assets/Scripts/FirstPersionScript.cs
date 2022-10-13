@@ -8,7 +8,7 @@ public class FirstPersionScript : MonoBehaviour
     [FormerlySerializedAs("sphere")] public Transform squareSphere;
     public Transform triangleSphere;
     private float SPEED = 5f;
-
+    
     private void Start()
     {
         squareSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere).transform;
@@ -20,66 +20,86 @@ public class FirstPersionScript : MonoBehaviour
 
     void Update()
     {
-        var cor = StartCoroutine(DrawSquareAndTriangle());
+        StartCoroutine(DrawTriangleCoroutine());
+        StartCoroutine(DrawSquareCoroutine());
+
+        StopAllCoroutines();
+
     }
 
-    private IEnumerator DrawSquareAndTriangle()
+    private IEnumerator DrawSquareCoroutine()
     {
-        // DrawSquare();
+        DrawSquare();
         
         yield return null;
 
+    }
+
+    private IEnumerator DrawTriangleCoroutine()
+    {
         DrawTriangle();
+        yield return null;
 
     }
 
     private void DrawTriangle()
     {
-
-        if (triangleSphere.position.x > 0 && triangleSphere.position.z > -10)
+        if (triangleSphere != null)
         {
-            Debug.Log("Position 1");
-            triangleSphere.position += new Vector3(-0.05f, 0, -0.1f) * 20f * Time.deltaTime;
-        }
+            if (triangleSphere.position.x > 0 && triangleSphere.position.z > -10)
+            {
+                Debug.Log("Position 1");
+                triangleSphere.position += new Vector3(-0.05f, 0, -0.1f) * 20f * Time.deltaTime;
+            }
 
-        if (triangleSphere.position.x < 0 && triangleSphere.position.z < 10)
-        {
-            Debug.Log("Position 2");
-            triangleSphere.position += new Vector3(-0.05f, 0, 0.1f) * 20f * Time.deltaTime;
+            if (triangleSphere.position.x < 0 && triangleSphere.position.z < 10)
+            {
+                Debug.Log("Position 2");
+                triangleSphere.position += new Vector3(-0.05f, 0, 0.1f) * 20f * Time.deltaTime;
+            }
+
+            if (triangleSphere.position.x < 10 && triangleSphere.position.z > 10)
+            {
+                Destroy(triangleSphere.gameObject);
+            }
         }
 
     }
     
     private void DrawSquare()
     {
-        if (squareSphere.position.x == _squarePositions[0].x)
+        if (squareSphere != null) 
         {
-            Debug.Log("Position 1");
-            squareSphere.position += Vector3.back * SPEED * Time.deltaTime;
-        }
+            if (squareSphere.position.x == _squarePositions[0].x)
+            {
+                Debug.Log("Position 1");
+                squareSphere.position += Vector3.back * SPEED * Time.deltaTime;
+            }
 
-        if (squareSphere.position.z < _squarePositions[1].z)
-        {
-            Debug.Log("Position 2");
-            squareSphere.position += Vector3.left * SPEED * Time.deltaTime;
-        }
+            if (squareSphere.position.z < _squarePositions[1].z)
+            {
+                Debug.Log("Position 2");
+                squareSphere.position += Vector3.left * SPEED * Time.deltaTime;
+            }
 
-        if (squareSphere.position.x < _squarePositions[3].x && squareSphere.position.z < _squarePositions[3].z)
-        {
-            Debug.Log("Position 3");
-            squareSphere.position += Vector3.forward * SPEED * Time.deltaTime;
-        }
+            if (squareSphere.position.x < _squarePositions[3].x && squareSphere.position.z < _squarePositions[3].z)
+            {
+                Debug.Log("Position 3");
+                squareSphere.position += Vector3.forward * SPEED * Time.deltaTime;
+            }
 
-        if (squareSphere.position.z > _squarePositions[3].z)
-        {
-            Debug.Log("Position 4");
-            squareSphere.position += Vector3.right * SPEED * Time.deltaTime;
-        }
+            if (squareSphere.position.z > _squarePositions[3].z)
+            {
+                Debug.Log("Position 4");
+                squareSphere.position += Vector3.right * SPEED * Time.deltaTime;
+            }
 
-        if (squareSphere.position.x > _squarePositions[0].x && squareSphere.position.z > _squarePositions[0].z)
-        {
-            Destroy(squareSphere.gameObject);
+            if (squareSphere.position.x > _squarePositions[0].x && squareSphere.position.z > _squarePositions[0].z)
+            {
+                Destroy(squareSphere.gameObject);
+            }            
         }
+        
     }
 
     private readonly Vector3[] _squarePositions =
