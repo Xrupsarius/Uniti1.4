@@ -36,12 +36,18 @@ public class FirstPersionScript : MonoBehaviour
     private void DrawTriangle()
     {
 
-        if (triangleSphere.position.x >= 0)
+        if (triangleSphere.position.x > 0 && triangleSphere.position.z > -10)
         {
             Debug.Log("Position 1");
-            triangleSphere.position = Vector3.MoveTowards(_trianglePositions[1], _trianglePositions[2], SPEED) * SPEED * Time.deltaTime;
+            triangleSphere.position += new Vector3(-0.05f, 0, -0.1f) * 20f * Time.deltaTime;
         }
-        
+
+        if (triangleSphere.position.x < 0 && triangleSphere.position.z < 10)
+        {
+            Debug.Log("Position 2");
+            triangleSphere.position += new Vector3(-0.05f, 0, 0.1f) * 20f * Time.deltaTime;
+        }
+
     }
     
     private void DrawSquare()
